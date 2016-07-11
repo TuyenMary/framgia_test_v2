@@ -1,6 +1,7 @@
 class ExamsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
+  skip_load_resource only: [:create]
   before_action :correct_user?, only: [:show, :update]
 
   def index
@@ -19,12 +20,17 @@ class ExamsController < ApplicationController
   end
 
   def create
+    if params[:subject_id].present?
     @exam = current_user.exams.build exam_params
-    if @exam.save
-      flash[:notice] = flash_message "created"
-      redirect_to exams_path
+      if @exam.save
+        flash[:notice] = flash_message "created"
+        redirect_to exams_path
+      else
+        flash.now[:alert] = t "flashs.messages.exam_create_reject", subject: @exam.subject.name
+      end
     else
-      flash.now[:alert] = t "flashs.messages.exam_create_reject", subject: @exam.subject.name
+      flash[:alert] = t "flashs.messages.exam_create_fail"
+      redirect_to root_path
     end
   end
 

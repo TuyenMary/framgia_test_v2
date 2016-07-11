@@ -52,6 +52,7 @@ en:
       create_question: "Question was created successfully"
       update_question: "Question was updated successfully"
       exam_create_reject: "%{subject} is in progress. Please complete this before start new one."
+      exam_create_fail: "No subject ,You can't create exam!"
       active_question: "Question #%{question_id} was active successfully!"
       deactive_question: "Question #%{question_id} was deactive successfully!"
       multi_active_question: "Questions was active successfully!"
